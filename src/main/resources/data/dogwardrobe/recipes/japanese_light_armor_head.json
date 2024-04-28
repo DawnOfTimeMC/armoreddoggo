@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"IiI",
+		"  I"
+	],
+	"key": {
+		"I": {
+			"item": "dotdogwardrobe:silk"
+		},
+		"i": {
+			"item": "minecraft:leather_helmet"
+		}
+	},
+	"result": {
+		"item": "dotdogwardrobe:japanese_light_armor_head"
+	}
+}
