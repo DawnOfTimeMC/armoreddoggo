@@ -1,6 +1,8 @@
 package com.dotteam.dogwardrobe.set;
 
 import static com.dotteam.dogwardrobe.DogWardrobe.MOD_ID;
+import static net.minecraft.client.resources.PlayerSkin.Model.SLIM;
+
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
@@ -86,7 +88,10 @@ public abstract class ArmorSet {
      * @return True if the entity has Alex model, False if it has Steve model.
      */
     protected boolean isSlimPlayerEntity(Entity entity) {
-        return entity instanceof AbstractClientPlayer player && "slim".equals(player.getModelName());
+        if (entity instanceof AbstractClientPlayer player) {
+            return player.getSkin().model() == SLIM;
+        }
+        return false;
     }
 
     @OnlyIn(Dist.CLIENT)
