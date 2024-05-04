@@ -29,12 +29,15 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
     protected MixinWolf(EntityType<? extends TamableAnimal> type, Level level) {
         super(type, level);
     }
-
+    /**
+    Minecraft code is hideous and doesn't even check if the armor can be repaired with armadillo for example.
+    I will clean this up : if the wolf has an armor, we check if the item in hand can repair it or if we must drop the armor.
+    If the wolf doesn't have an armor and the item in hand is and armor, we equip the wolf with the armor.
+    In each case, we return SUCCESS.
+     */
     @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
     private void onMobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        // Minecraft code is hideous and doesn't even check if the armor can be repaired with armadillo for example.
-        // I will clean this up : if the wolf has an armor, we check if the item in hand can repair it and cancel the code if needed.
-        // If the wold doesn't have an armor and the item in hand is and armor, I also cancel the call.
+
         Constants.LOG.info("Interact with wolf !");
         if(!this.level().isClientSide() && !this.isBaby() && this.isTame() && this.isOwnedBy(player)) {
             ItemStack stack = player.getItemInHand(hand);
