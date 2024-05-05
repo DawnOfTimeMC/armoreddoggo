@@ -1,11 +1,11 @@
-# Ancient Architecture
+# Armored Doggo
 <a href="https://discord.gg/MrHu9MJ">
   <img alt="Discord" src="https://img.shields.io/discord/303974483591692289?color=informational&label=discord&logo=discord&style=flat-square&logoColor=white&labelColor=0d1117">
 </a>
 
 ![Mod Loader: Forge](https://img.shields.io/badge/loader-forge-1976d2?style=flat-square&color=orange&logo=curseforge&labelColor=0d1117)
 
-**Ancient Architecture** (*previous called Dawn of Time : Builder Edition*) is a mod made for Minecraft architect lover as much as beginner as expert. Since this mod have been created by two Minecraft builder everything is balanced to improve and make your building experience perfect : clean and well organized inventory, connectivity between blocks, fancy connected textures, etc. Our mod add more than 300 blocks to your game !
+**Armored Doggo**  is a mod that adds stylish armor for your beloved Doggo !
 
 ### IntelliJ IDEA
 This guide will show how to import the project into IntelliJ IDEA. The setup process is roughly equivalent to setting up the modloaders independently and should be very familiar to anyone who has worked with their MDKs.

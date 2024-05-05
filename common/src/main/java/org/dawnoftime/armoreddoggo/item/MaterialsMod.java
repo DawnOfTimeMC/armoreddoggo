@@ -1,6 +1,6 @@
-package org.dawnoftime.armoreddoggo.util;
+package org.dawnoftime.armoreddoggo.item;
 
-public class DoTBMaterials {
+public class MaterialsMod {
 
 	/*
 	 * I keep this here in case we want to add some tools public enum ItemMaterial

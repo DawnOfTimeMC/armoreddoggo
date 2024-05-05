@@ -1,4 +1,4 @@
-package org.dawnoftime.armoreddoggo.util;
+package org.dawnoftime.armoreddoggo;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
