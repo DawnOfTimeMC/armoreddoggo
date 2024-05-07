@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.item.AnimalArmorItem;
+import net.minecraft.world.item.ItemStack;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelProvider;
 import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.spongepowered.asm.mixin.*;
@@ -39,11 +41,11 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
     private void onRender(PoseStack poseStack, MultiBufferSource buffer, int light, Wolf pLivingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         if(pLivingEntity instanceof Wolf wolf){
             if (wolf.hasArmor()) {
-                if(wolf.getBodyArmorItem().getItem() instanceof DogArmorItem dogArmorItem){
+                ItemStack stack = wolf.getBodyArmorItem();
+                if(stack.getItem() instanceof DogArmorItem dogArmorItem){
                     // If the wolf has a different armor, we change the model.
                     if(dogArmorItem.getModelProvider() != this.armoreddoggo$dogModelProvider){
                         this.armoreddoggo$dogModelProvider = dogArmorItem.getModelProvider();
-                        //this.armoreddoggo$coloredModel;
                         this.armoreddoggo$uncoloredModel = this.armoreddoggo$dogModelProvider.createModel();
                     }
                     // Now we will animate the models !
@@ -52,24 +54,14 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
                     this.armoreddoggo$uncoloredModel.setupAnim(wolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(dogArmorItem.getTexture()));
                     this.armoreddoggo$uncoloredModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-                    //this.maybeRenderColoredLayer(poseStack, buffer, light, itemstack, animalarmoritem);
+                    this.maybeRenderColoredLayer(poseStack, buffer, light, stack, dogArmorItem);
                     //.maybeRenderCracks(poseStack, buffer, light, itemstack);
                     ci.cancel();
                 }
             }
         }
     }
-}
 
-/* TODO
- * Insérer du code entre la ligne 55 et 56, se concluant par un return pour éviter l'execution de la suite.
- * Pour réussir à charger le model, il faut obtenir l'item stack de l'armure avec :
- *      ItemStack itemstack = pLivingEntity.getItemBySlot(EquipmentSlot.CHEST);
- * Ensuite, on regarde si itemstack#getItem() est instance de ma class WolfArmorItem().
- * Si oui, on caste et on récupère le nouveau model avec une fonction getModel() définie dans WorlArmorItem().
- * On applique les proprités de l'ancien model au nouveau comme dans ClientHooks.copyModelProperties(original, replacement).
- * A voir si les fonctions suivantes doivent être inclues :
- *      - WolfArmorLayer#maybeRenderColoredLayer(...)
- *      - WolfArmorLayer#maybeRenderCracks(...)
- * Ensuite on return pour finir l'exécution de la fonction.
- */
+    @Shadow
+    protected abstract void maybeRenderColoredLayer(PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemstack, AnimalArmorItem animalarmoritem);
+}

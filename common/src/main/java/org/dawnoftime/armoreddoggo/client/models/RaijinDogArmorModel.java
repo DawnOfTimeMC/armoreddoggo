@@ -3,13 +3,33 @@ package org.dawnoftime.armoreddoggo.client.models;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Wolf;
+import org.dawnoftime.armoreddoggo.Constants;
 import org.jetbrains.annotations.NotNull;
 
 public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
+	protected final ModelPart scarfLeftA;
+	protected final ModelPart scarfLeftB;
+	protected final ModelPart scarfLeftC;
+	protected final ModelPart scarfLeftD;
+	protected final ModelPart scarfRightA;
+	protected final ModelPart scarfRightB;
+	protected final ModelPart scarfRightC;
+	protected final ModelPart scarfRightD;
+	private float lastAgeInTicks = 0;
+	private float animationProgress = 0;
 
 	public RaijinDogArmorModel(ModelPart root) {
 		super(root);
+		this.scarfLeftA = this.upperBody.getChild("mane_rotation").getChild("scarf_left_a");
+		this.scarfLeftB = this.scarfLeftA.getChild("scarf_left_b");
+		this.scarfLeftC = this.scarfLeftB.getChild("scarf_left_c");
+		this.scarfLeftD = this.scarfLeftC.getChild("scarf_left_d");
+		this.scarfRightA = this.upperBody.getChild("mane_rotation").getChild("scarf_right_a");
+		this.scarfRightB = this.scarfRightA.getChild("scarf_right_b");
+		this.scarfRightC = this.scarfRightB.getChild("scarf_right_c");
+		this.scarfRightD = this.scarfRightC.getChild("scarf_right_d");
 	}
 
 	@Override
@@ -52,25 +72,25 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 
 		PartDefinition headHornRightD2 = headHornLeftA2.addOrReplaceChild("headHornRightD2", CubeListBuilder.create().texOffs(24, 23).addBox(-0.5F, -5.9068F, 0.3616F, 1.0F, 2.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 1.116F, 0.067F, -0.2182F, 0.0F, 0.0F));
 
-		PartDefinition chestScarfLeftA = mane_rotation.addOrReplaceChild("chestScarfLeftA", CubeListBuilder.create(), PartPose.offsetAndRotation(-2.4221F, -5.3005F, -0.4812F, 0.0F, 1.1345F, 0.0F));
+		PartDefinition scarfRightA = mane_rotation.addOrReplaceChild("scarf_right_a", CubeListBuilder.create(), PartPose.offsetAndRotation(-2.4221F, -5.3005F, -0.4812F, 0.0F, 1.1345F, 0.0F));
 
-		PartDefinition chestScarfTopRight_r1 = chestScarfLeftA.addOrReplaceChild("chestScarfTopRight_r1", CubeListBuilder.create().texOffs(49, 18).addBox(-7.4221F, -13.3005F, -1.4812F, 5.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(2.4221F, 12.8005F, 0.9812F, 0.0F, 0.0F, 0.0F));
+		PartDefinition chestScarfTopRight_r1 = scarfRightA.addOrReplaceChild("chestScarfTopRight_r1", CubeListBuilder.create().texOffs(49, 18).addBox(-7.4221F, -13.3005F, -1.4812F, 5.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(2.4221F, 12.8005F, 0.9812F, 0.0F, 0.0F, 0.0F));
 
-		PartDefinition bone = chestScarfLeftA.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(50, 12).mirror().addBox(-0.5779F, 0.0505F, -0.5188F, 1.0F, 5.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(-5.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
+		PartDefinition scarfRightB = scarfRightA.addOrReplaceChild("scarf_right_b", CubeListBuilder.create().texOffs(50, 12).mirror().addBox(-0.5779F, 0.0505F, -0.5188F, 1.0F, 5.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(-5.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
 
-		PartDefinition chestScarfLeftB = bone.addOrReplaceChild("chestScarfLeftB", CubeListBuilder.create().texOffs(40, 12).mirror().addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(0.0176F, 4.9222F, 0.1054F, -0.8788F, 1.185F, -1.5534F));
+		PartDefinition scarfRightC = scarfRightB.addOrReplaceChild("scarf_right_c", CubeListBuilder.create().texOffs(40, 12).mirror().addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(0.0176F, 4.9222F, 0.1054F, -0.8788F, 1.185F, -1.5534F));
 
-		PartDefinition chestScarfLeftC = chestScarfLeftB.addOrReplaceChild("chestScarfLeftC", CubeListBuilder.create().texOffs(44, 12).mirror().addBox(-1.0F, 0.0F, -0.5F, 2.0F, 6.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, -2.2818F, 0.8634F, -1.6786F));
+		PartDefinition scarfRightD = scarfRightC.addOrReplaceChild("scarf_right_d", CubeListBuilder.create().texOffs(44, 12).mirror().addBox(-1.0F, 0.0F, -0.5F, 2.0F, 6.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, -2.2818F, 0.8634F, -1.6786F));
 
-		PartDefinition chestScarfRightA = mane_rotation.addOrReplaceChild("chestScarfRightA", CubeListBuilder.create(), PartPose.offsetAndRotation(2.4221F, -5.3005F, -0.4812F, 0.0F, -1.1345F, 0.0F));
+		PartDefinition scarfLeftA = mane_rotation.addOrReplaceChild("scarf_left_a", CubeListBuilder.create(), PartPose.offsetAndRotation(2.4221F, -5.3005F, -0.4812F, 0.0F, -1.1345F, 0.0F));
 
-		PartDefinition chestScarfTopLeft_r1 = chestScarfRightA.addOrReplaceChild("chestScarfTopLeft_r1", CubeListBuilder.create().texOffs(49, 18).mirror().addBox(2.4221F, -13.3005F, -1.4812F, 5.0F, 1.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(-2.4221F, 12.8005F, 0.9812F, 0.0F, 0.0F, 0.0F));
+		PartDefinition chestScarfTopLeft_r1 = scarfLeftA.addOrReplaceChild("chestScarfTopLeft_r1", CubeListBuilder.create().texOffs(49, 18).mirror().addBox(2.4221F, -13.3005F, -1.4812F, 5.0F, 1.0F, 1.0F).mirror(false), PartPose.offsetAndRotation(-2.4221F, 12.8005F, 0.9812F, 0.0F, 0.0F, 0.0F));
 
-		PartDefinition bone2 = chestScarfRightA.addOrReplaceChild("bone2", CubeListBuilder.create().texOffs(50, 12).addBox(-0.4221F, 0.0505F, -0.5188F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
+		PartDefinition scarfLeftB = scarfLeftA.addOrReplaceChild("scarf_left_b", CubeListBuilder.create().texOffs(50, 12).addBox(-0.4221F, 0.0505F, -0.5188F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
-		PartDefinition chestScarfRightB = bone2.addOrReplaceChild("chestScarfRightB", CubeListBuilder.create().texOffs(40, 12).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(-0.0176F, 4.9222F, 0.1054F, -0.8788F, -1.185F, 1.5534F));
+		PartDefinition scarfLeftC = scarfLeftB.addOrReplaceChild("scarf_left_c", CubeListBuilder.create().texOffs(40, 12).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(-0.0176F, 4.9222F, 0.1054F, -0.8788F, -1.185F, 1.5534F));
 
-		PartDefinition chestScarfRightC = chestScarfRightB.addOrReplaceChild("chestScarfRightC", CubeListBuilder.create().texOffs(44, 12).addBox(-1.0F, 0.0F, -0.5F, 2.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, -2.2818F, -0.8634F, 1.6786F));
+		PartDefinition scarfLeftD = scarfLeftC.addOrReplaceChild("scarf_left_d", CubeListBuilder.create().texOffs(44, 12).addBox(-1.0F, 0.0F, -0.5F, 2.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, -2.2818F, -0.8634F, 1.6786F));
 
 		PartDefinition right_hind_leg = partdefinition.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(54, 0).mirror()
 				.addBox(0.0F, 4.0F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.1F)).mirror(false).texOffs(54, 0).mirror()
@@ -97,7 +117,23 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 	}
 
 	@Override
-	public void setupAnim(@NotNull T wolf, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(wolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	public void prepareMobModel(@NotNull T wolf, float limbSwing, float limbSwingAmount, float partialTicks) {
+		super.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
+		float ageInTicks = wolf.tickCount + partialTicks;
+		this.animationProgress = (this.animationProgress + ((float) wolf.getDeltaMovement().length() + 1) * (ageInTicks - this.lastAgeInTicks) / 60) % 1;
+		this.scarfLeftA.yRot = -1.1345F - 0.1F * Mth.sin(this.animationProgress * 2 * Mth.PI);
+		this.scarfRightA.yRot = 1.1345F + 0.1F * Mth.sin(this.animationProgress * 2 * Mth.PI);
+		this.scarfLeftA.zRot = -0.3F + 0.2F * Mth.sin(this.animationProgress * 2 * Mth.PI);
+		this.scarfRightA.zRot = 0.3F - 0.2F * Mth.sin(this.animationProgress * 2 * Mth.PI);
+		float prevAnim = (this.animationProgress + 0.25F) % 1;
+		this.scarfLeftB.zRot = -0.3927F - 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfRightB.zRot = 0.3927F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		prevAnim = (prevAnim + 0.25F) % 1;
+		this.scarfLeftC.xRot = -0.8788F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfRightC.xRot = -0.8788F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		prevAnim = (prevAnim + 0.25F) % 1;
+		this.scarfLeftD.zRot = 1.6786F - 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfRightD.zRot = -1.6786F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.lastAgeInTicks = ageInTicks;
 	}
 }

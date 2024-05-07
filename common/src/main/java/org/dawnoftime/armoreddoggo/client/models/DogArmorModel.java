@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.world.entity.animal.Wolf;
 import org.dawnoftime.armoreddoggo.Constants;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelSupplier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.NoSuchElementException;
 
@@ -39,13 +40,14 @@ public abstract class DogArmorModel<T extends Wolf> extends WolfModel<T> impleme
             this.tail = root.getChild("tail");
             this.realTail = this.tail.getChild("real_tail");
         } catch (NoSuchElementException e) {
-            Constants.LOG.error("Impossible to find one of the Vanilla Wolf ModelPart. Either this model was modified, or you probably forgot to call DogArmorModel.templateLayerDefinition() to get the MeshDefinition of the model.");
+            Constants.LOG.error("Impossible to find one of the Vanilla Wolf ModelPart. Either wold model was modified, or you probably forgot to call DogArmorModel.templateLayerDefinition() to get the MeshDefinition of the model.");
             throw new RuntimeException(e);
         }
     }
 
     /**
      * This function must be called before adding the parts in the other models !!!
+     *
      * @return A minimal mesh with all the part of the wolf model and their appropriate rotation positions.
      */
     public static MeshDefinition templateLayerDefinition() {
@@ -63,5 +65,24 @@ public abstract class DogArmorModel<T extends Wolf> extends WolfModel<T> impleme
         PartDefinition tail = root.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, 12.0F, 8.0F, (float) (Math.PI / 5), 0.0F, 0.0F));
         tail.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.ZERO);
         return mesh;
+    }
+
+    /**
+     * Be careful ! Minecraft's devs decided to pass the angle of the tail in the field "ageInTicks" instead of the actual ageInTicks.
+     * To get the actual ageInTicks, you have to use wolf#tickCount + partialTicks (which is not accessible in this function ^^).
+     * Use the function {@link DogArmorModel#prepareMobModel} instead.
+     */
+    @Deprecated
+    @Override
+    public void setupAnim(@NotNull T wolf, float limbSwing, float limbSwingAmount, float tailRotation, float netHeadYaw, float headPitch) {
+        super.setupAnim(wolf, limbSwing, limbSwingAmount, tailRotation, netHeadYaw, headPitch);
+    }
+
+    /**
+     * Override this function to animate the model.
+     */
+    @Override
+    public void prepareMobModel(@NotNull T wolf, float limbSwing, float limbSwingAmount, float partialTicks) {
+        super.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
     }
 }
