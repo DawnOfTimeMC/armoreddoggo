@@ -9,9 +9,14 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelProvider;
 import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.spongepowered.asm.mixin.*;
@@ -48,20 +53,26 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
                         this.armoreddoggo$dogModelProvider = dogArmorItem.getModelProvider();
                         this.armoreddoggo$uncoloredModel = this.armoreddoggo$dogModelProvider.createModel();
                     }
+                    Crackiness.Level crack = Crackiness.WOLF_ARMOR.byDamage(stack);
                     // Now we will animate the models !
                     this.getParentModel().copyPropertiesTo(this.armoreddoggo$uncoloredModel);
                     this.armoreddoggo$uncoloredModel.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
                     this.armoreddoggo$uncoloredModel.setupAnim(wolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                    VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(dogArmorItem.getTexture()));
+                    VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(dogArmorItem.getTexture(crack)));
                     this.armoreddoggo$uncoloredModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-                    this.maybeRenderColoredLayer(poseStack, buffer, light, stack, dogArmorItem);
-                    //.maybeRenderCracks(poseStack, buffer, light, itemstack);
+                    if (stack.is(ItemTags.DYEABLE)) {
+                        int colorARGB32 = DyedItemColor.getOrDefault(stack, 0);
+                        ResourceLocation overlayTexture = dogArmorItem.getOverlayTexture(crack);
+                        if (FastColor.ARGB32.alpha(colorARGB32) != 0 && overlayTexture != null) {
+                            float red = (float)FastColor.ARGB32.red(colorARGB32) / 255.0F;
+                            float green = (float)FastColor.ARGB32.green(colorARGB32) / 255.0F;
+                            float blue = (float)FastColor.ARGB32.blue(colorARGB32) / 255.0F;
+                            this.armoreddoggo$uncoloredModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+                        }
+                    }
                     ci.cancel();
                 }
             }
         }
     }
-
-    @Shadow
-    protected abstract void maybeRenderColoredLayer(PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemstack, AnimalArmorItem animalarmoritem);
 }

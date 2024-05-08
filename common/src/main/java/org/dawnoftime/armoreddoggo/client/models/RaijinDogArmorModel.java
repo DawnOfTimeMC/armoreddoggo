@@ -52,9 +52,12 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 		PartDefinition headHornLeftA3 = body_rotation.addOrReplaceChild("headHornLeftA3", CubeListBuilder.create().texOffs(22, 19).addBox(-0.5F, -2.884F, 0.067F, 1.0F, 3.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 0.75F, 3.0F, -2.618F, 0.0F, 0.0F));
 
 		PartDefinition upper_body = partdefinition.getChild("upper_body");
-		PartDefinition mane_rotation = upper_body.addOrReplaceChild("mane_rotation", CubeListBuilder.create().texOffs(18, 12).addBox(-4.0F, -1.5F, -0.5F, 8.0F, 1.0F, 2.0F, new CubeDeformation(0.1F))
-		.texOffs(22, 0).addBox(-4.5F, -5.0F, 1.0F, 9.0F, 6.0F, 6.0F, new CubeDeformation(-0.2F))
-		.texOffs(0, 0).addBox(-5.0F, -2.5F, 0.25F, 10.0F, 3.0F, 3.0F, new CubeDeformation(-0.4F)), PartPose.offsetAndRotation(1.0F, 2.5F, -2.5F, 0F, 0.0F, 0.0F));
+		PartDefinition mane_rotation = upper_body.addOrReplaceChild("mane_rotation", CubeListBuilder.create()
+				.texOffs(34, 21).addBox(-4.0F, -5.5F, -0.5F, 8.0F, 1.0F, 7.0F, new CubeDeformation(0.1F))
+				.texOffs(18, 12).addBox(-4.0F, -1.5F, -0.5F, 8.0F, 1.0F, 2.0F, new CubeDeformation(0.1F))
+				.texOffs(22, 0).addBox(-4.5F, -5.0F, 1.0F, 9.0F, 6.0F, 6.0F, new CubeDeformation(-0.2F))
+				.texOffs(0, 0).addBox(-5.0F, -2.5F, 0.25F, 10.0F, 3.0F, 3.0F, new CubeDeformation(-0.4F)),
+			PartPose.offsetAndRotation(1.0F, 2.5F, -2.5F, 0F, 0.0F, 0.0F));
 
 		PartDefinition chestScarfFront_r1 = mane_rotation.addOrReplaceChild("chestScarfFront_r1", CubeListBuilder.create().texOffs(49, 18).addBox(-2.4221F, -13.3005F, -1.4812F, 5.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 7.5F, 0.5F, 0.0F, 0.0F, 0.0F));
 
@@ -120,17 +123,17 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 	public void prepareMobModel(@NotNull T wolf, float limbSwing, float limbSwingAmount, float partialTicks) {
 		super.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
 		float ageInTicks = wolf.tickCount + partialTicks;
-		this.animationProgress = (this.animationProgress + ((float) wolf.getDeltaMovement().length() + 1) * (ageInTicks - this.lastAgeInTicks) / 60) % 1;
+		this.animationProgress = (this.animationProgress + (ageInTicks - this.lastAgeInTicks) / 60) % 1;
 		this.scarfLeftA.yRot = -1.1345F - 0.1F * Mth.sin(this.animationProgress * 2 * Mth.PI);
 		this.scarfRightA.yRot = 1.1345F + 0.1F * Mth.sin(this.animationProgress * 2 * Mth.PI);
-		this.scarfLeftA.zRot = -0.3F + 0.2F * Mth.sin(this.animationProgress * 2 * Mth.PI);
-		this.scarfRightA.zRot = 0.3F - 0.2F * Mth.sin(this.animationProgress * 2 * Mth.PI);
+		this.scarfLeftA.zRot = -0.1F + 0.04F * Mth.sin(this.animationProgress * 2 * Mth.PI);
+		this.scarfRightA.zRot = 0.1F - 0.04F * Mth.sin(this.animationProgress * 2 * Mth.PI);
 		float prevAnim = (this.animationProgress + 0.25F) % 1;
-		this.scarfLeftB.zRot = -0.3927F - 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
-		this.scarfRightB.zRot = 0.3927F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfLeftB.zRot = -0.3927F - 0.1F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfRightB.zRot = 0.3927F + 0.1F * Mth.sin(prevAnim * 2 * Mth.PI);
 		prevAnim = (prevAnim + 0.25F) % 1;
-		this.scarfLeftC.xRot = -0.8788F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
-		this.scarfRightC.xRot = -0.8788F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfLeftC.xRot = -0.8788F + 0.2F * Mth.sin(prevAnim * 2 * Mth.PI);
+		this.scarfRightC.xRot = -0.8788F + 0.2F * Mth.sin(prevAnim * 2 * Mth.PI);
 		prevAnim = (prevAnim + 0.25F) % 1;
 		this.scarfLeftD.zRot = 1.6786F - 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
 		this.scarfRightD.zRot = -1.6786F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);

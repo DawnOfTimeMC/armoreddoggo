@@ -1,15 +1,18 @@
 package org.dawnoftime.armoreddoggo.item;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.item.*;
-import org.dawnoftime.armoreddoggo.UtilsMod;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelProvider;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.system.NativeType;
 
+import javax.annotation.Nullable;
 import java.util.List;
+
+import static org.dawnoftime.armoreddoggo.Constants.MOD_ID;
 
 public class DogArmorItem extends AnimalArmorItem {
 
@@ -30,35 +33,28 @@ public class DogArmorItem extends AnimalArmorItem {
 		return this.modelProvider;
 	}
 
+	public @NotNull ResourceLocation getTexture(Crackiness.Level crack) {
+		return this.modelProvider.getTexture(crack);
+	}
+
 	@Override
 	public @NotNull ResourceLocation getTexture() {
-		return this.modelProvider.getTexture();
+		return this.getTexture(Crackiness.Level.NONE);
+	}
+
+	public ResourceLocation getOverlayTexture(Crackiness.Level crack) {
+		return this.modelProvider.getOverlayTexture(crack);
 	}
 
 	@Override
-	public void appendHoverText(@NotNull ItemStack stack, TooltipContext context, @NotNull List<Component> tooltips, @NotNull TooltipFlag flagIn) {
+	@Nullable
+	public ResourceLocation getOverlayTexture() {
+		return this.getOverlayTexture(Crackiness.Level.NONE);
+	}
+
+	@Override
+	public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltips, @NotNull TooltipFlag flagIn) {
 		super.appendHoverText(stack, context, tooltips, flagIn);
-		UtilsMod.addTooltip(tooltips, this);
+		tooltips.add(Component.translatable("tooltip." + MOD_ID + ".dog_armor").withStyle(ChatFormatting.GRAY));
 	}
-
-	/*
-	@Override
-	public void initializeClient(@NotNull Consumer<IClientItemExtensions> consumer) {
-		consumer.accept(new IClientItemExtensions() {
-			@Override
-			public @NotNull Model getGenericArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-				return IClientItemExtensions.super.getGenericArmorModel(livingEntity, itemStack, equipmentSlot, original);
-			}
-
-			@Override
-			public @NotNull HumanoidModel<?> getHumanoidArmorModel(@NotNull LivingEntity living, @NotNull ItemStack stack, @NotNull EquipmentSlot slot, @NotNull HumanoidModel<?> defaultModel) {
-				HumanoidModel<?> model = WolfArmorItem.this.set.getModel(living, stack, slot, defaultModel);
-				model.young = living.isBaby();
-				model.crouching = living.isShiftKeyDown();
-				model.riding = defaultModel.riding;
-				return model;
-			}
-		});
-	}
-	*/
 }
