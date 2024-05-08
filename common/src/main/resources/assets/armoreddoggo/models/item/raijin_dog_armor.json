@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "armoreddoggo:item/raijin_dog_armor",
+        "layer1": "armoreddoggo:item/raijin_dog_armor_overlay"
+    }
+}

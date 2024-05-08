@@ -51,7 +51,6 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
                     this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
                     this.setBodyArmorItem(ItemStack.EMPTY);
                     this.spawnAtLocation(armorStack);
-                    Constants.LOG.info("Remove wolf armor !");
                     cir.setReturnValue(InteractionResult.SUCCESS);
                 }else if(this.isInSittingPose() && armorStack.isDamaged() && armorStack.getItem() instanceof AnimalArmorItem armorItem){
                     if(armorItem.getMaterial().value().repairIngredient().get().test(stack)){
@@ -59,7 +58,6 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
                         stack.shrink(1);
                         this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
                         armorStack.setDamageValue(Math.max(0, armorStack.getDamageValue() - (int)((float)armorStack.getMaxDamage() * 0.125F)));
-                        Constants.LOG.info("Repair wolf armor !");
                         cir.setReturnValue(InteractionResult.SUCCESS);
                     }
                 }
@@ -68,7 +66,6 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
                 if(animalArmorItem.getBodyType() == AnimalArmorItem.BodyType.CANINE){
                     this.setBodyArmorItem(stack.copyWithCount(1));
                     stack.consume(1, player);
-                    Constants.LOG.info("Equip wolf !");
                     cir.setReturnValue(InteractionResult.SUCCESS);
                 }
             }

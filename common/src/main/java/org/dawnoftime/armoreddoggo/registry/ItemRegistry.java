@@ -7,6 +7,7 @@ import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import static org.dawnoftime.armoreddoggo.Constants.RAIJIN_DOG_ARMOR_NAME;
 
 public final class ItemRegistry {
+	public static final Item TAB_ICON = new Item(new Item.Properties());
 	public static final Item RAIJIN_DOG_ARMOR = new DogArmorItem(RAIJIN_DOG_ARMOR_NAME, ArmorMaterials.ARMADILLO, 4);
 
 }
