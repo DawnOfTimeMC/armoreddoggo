@@ -1,4 +1,4 @@
-package org.dawnoftime.armoreddoggo.registry;
+package org.dawnoftime.armoreddoggo;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -6,6 +6,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.dawnoftime.armoreddoggo.Constants;
+import org.dawnoftime.armoreddoggo.registry.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

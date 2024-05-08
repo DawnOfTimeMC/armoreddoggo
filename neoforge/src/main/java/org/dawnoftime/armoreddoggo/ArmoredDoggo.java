@@ -2,7 +2,6 @@ package org.dawnoftime.armoreddoggo;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.FastColor;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.api.distmarker.Dist;
@@ -15,9 +14,8 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.dawnoftime.armoreddoggo.registry.ModelProviderRegistry;
-import org.jline.utils.Log;
 
-import static org.dawnoftime.armoreddoggo.registry.ItemModRegistry.*;
+import static org.dawnoftime.armoreddoggo.ItemModRegistry.*;
 
 @Mod(Constants.MOD_ID)
 public class ArmoredDoggo {
@@ -40,8 +38,6 @@ public class ArmoredDoggo {
             modEventBus.addListener(ArmoredDoggo::registerLayerDefinitions);
             modEventBus.addListener(ArmoredDoggo::registerColorHandlersEvent);
         }
-
-        Log.error("CODE COULEUR" + FastColor.ARGB32.color(255, 255, 255));
 
         CommonClass.init();
     }

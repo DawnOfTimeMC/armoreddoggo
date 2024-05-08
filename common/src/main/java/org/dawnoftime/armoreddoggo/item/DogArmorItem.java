@@ -9,8 +9,6 @@ import net.minecraft.world.item.*;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelProvider;
 import org.dawnoftime.armoreddoggo.registry.ModelProviderRegistry;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static org.dawnoftime.armoreddoggo.Constants.MOD_ID;
