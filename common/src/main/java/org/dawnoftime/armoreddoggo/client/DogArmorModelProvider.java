@@ -7,12 +7,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.entity.animal.Wolf;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
 import static org.dawnoftime.armoreddoggo.Constants.MOD_ID;
 
+// Client side
 public class DogArmorModelProvider {
     final Supplier<LayerDefinition> layerDefinitionSupplier;
     final DogArmorModelSupplier dogArmorModelSupplier;
@@ -36,14 +38,17 @@ public class DogArmorModelProvider {
                 Crackiness.Level.HIGH, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_high_overlay.png"));
     }
 
+    @NotNull
     public ResourceLocation getTexture(Crackiness.Level crack) {
         return this.textureResourceLocations.get(crack);
     }
 
+    @NotNull
     public ResourceLocation getOverlayTexture(Crackiness.Level crack) {
         return this.overlayResourceLocations.get(crack);
     }
 
+    @NotNull
     public ModelLayerLocation getLayerLocation() {
         return this.modelLayerLocation;
     }

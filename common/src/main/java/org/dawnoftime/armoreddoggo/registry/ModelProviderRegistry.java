@@ -5,18 +5,21 @@ import org.dawnoftime.armoreddoggo.client.DogArmorModelProvider;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelSupplier;
 import org.dawnoftime.armoreddoggo.client.models.RaijinDogArmorModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.function.Supplier;
+
+import static org.dawnoftime.armoreddoggo.Constants.RAIJIN_DOG_ARMOR_NAME;
+
+// Client side
 public class ModelProviderRegistry {
 
-    public static final List<DogArmorModelProvider> REGISTRY = new ArrayList<>();
+    public static final HashMap<String, DogArmorModelProvider> REGISTRY = new HashMap<>();
+    static {
+        register(RAIJIN_DOG_ARMOR_NAME, RaijinDogArmorModel::createLayerDefinition, RaijinDogArmorModel::new);
+    }
 
-    public static final DogArmorModelProvider RAIJIN_DOG_ARMOR_MODEL_PROVIDER = register("raijin_dog_armor", RaijinDogArmorModel::createLayerDefinition, RaijinDogArmorModel::new);
-
-    private static DogArmorModelProvider register(String armorName, Supplier<LayerDefinition> layerDefinition, DogArmorModelSupplier dogArmorModelSupplier){
+    private static void register(String armorName, Supplier<LayerDefinition> layerDefinition, DogArmorModelSupplier dogArmorModelSupplier){
         DogArmorModelProvider provider = new DogArmorModelProvider(armorName, layerDefinition, dogArmorModelSupplier);
-        REGISTRY.add(provider);
-        return provider;
+        REGISTRY.put(armorName, provider);
     }
 }

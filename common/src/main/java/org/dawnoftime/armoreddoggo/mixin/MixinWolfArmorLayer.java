@@ -14,7 +14,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import org.dawnoftime.armoreddoggo.client.DogArmorModelProvider;
@@ -28,10 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wolf>> {
     @Unique
     private DogArmorModelProvider armoreddoggo$dogModelProvider;
-    //@Unique
-    //private WolfModel<Wolf> armoreddoggo$coloredModel;
     @Unique
-    private WolfModel<Wolf> armoreddoggo$uncoloredModel;
+    private WolfModel<Wolf> armoreddoggo$dogModel;
 
     public MixinWolfArmorLayer(RenderLayerParent<Wolf, WolfModel<Wolf>> parentLayer) {
         super(parentLayer);
@@ -51,23 +48,23 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
                     // If the wolf has a different armor, we change the model.
                     if(dogArmorItem.getModelProvider() != this.armoreddoggo$dogModelProvider){
                         this.armoreddoggo$dogModelProvider = dogArmorItem.getModelProvider();
-                        this.armoreddoggo$uncoloredModel = this.armoreddoggo$dogModelProvider.createModel();
+                        this.armoreddoggo$dogModel = this.armoreddoggo$dogModelProvider.createModel();
                     }
                     Crackiness.Level crack = Crackiness.WOLF_ARMOR.byDamage(stack);
                     // Now we will animate the models !
-                    this.getParentModel().copyPropertiesTo(this.armoreddoggo$uncoloredModel);
-                    this.armoreddoggo$uncoloredModel.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
-                    this.armoreddoggo$uncoloredModel.setupAnim(wolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                    this.getParentModel().copyPropertiesTo(this.armoreddoggo$dogModel);
+                    this.armoreddoggo$dogModel.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
+                    this.armoreddoggo$dogModel.setupAnim(wolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(dogArmorItem.getTexture(crack)));
-                    this.armoreddoggo$uncoloredModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                    this.armoreddoggo$dogModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                     if (stack.is(ItemTags.DYEABLE)) {
                         int colorARGB32 = DyedItemColor.getOrDefault(stack, 0);
                         ResourceLocation overlayTexture = dogArmorItem.getOverlayTexture(crack);
-                        if (FastColor.ARGB32.alpha(colorARGB32) != 0 && overlayTexture != null) {
+                        if (FastColor.ARGB32.alpha(colorARGB32) != 0) {
                             float red = (float)FastColor.ARGB32.red(colorARGB32) / 255.0F;
                             float green = (float)FastColor.ARGB32.green(colorARGB32) / 255.0F;
                             float blue = (float)FastColor.ARGB32.blue(colorARGB32) / 255.0F;
-                            this.armoreddoggo$uncoloredModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+                            this.armoreddoggo$dogModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
                         }
                     }
                     ci.cancel();

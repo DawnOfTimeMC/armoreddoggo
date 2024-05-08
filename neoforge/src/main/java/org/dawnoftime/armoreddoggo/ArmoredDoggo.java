@@ -44,6 +44,6 @@ public class ArmoredDoggo {
      * @param event Event called.
      */
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event){
-        ModelProviderRegistry.REGISTRY.forEach((provider) -> event.registerLayerDefinition(provider.getLayerLocation(), provider::createLayer));
+        ModelProviderRegistry.REGISTRY.forEach((name, provider) -> event.registerLayerDefinition(provider.getLayerLocation(), provider::createLayer));
     }
 }
