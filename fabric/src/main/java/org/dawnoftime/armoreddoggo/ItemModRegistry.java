@@ -9,8 +9,7 @@ import org.dawnoftime.armoreddoggo.registry.ItemRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dawnoftime.armoreddoggo.Constants.MOD_ID;
-import static org.dawnoftime.armoreddoggo.Constants.RAIJIN_DOG_ARMOR_NAME;
+import static org.dawnoftime.armoreddoggo.Constants.*;
 
 public class ItemModRegistry {
 
@@ -19,6 +18,7 @@ public class ItemModRegistry {
     public static void init(){
         registerItem(MOD_ID, ItemRegistry.TAB_ICON);
         registerItem(RAIJIN_DOG_ARMOR_NAME, ItemRegistry.RAIJIN_DOG_ARMOR);
+        registerItem(HOLY_DOG_ARMOR_NAME, ItemRegistry.HOLY_DOG_ARMOR);
     }
 
     public static void registerItem(String name, Item item){

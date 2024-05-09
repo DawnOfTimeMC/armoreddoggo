@@ -37,8 +37,6 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
      */
     @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
     private void onMobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-
-        Constants.LOG.info("Interact with wolf !");
         if(!this.level().isClientSide() && !this.isBaby() && this.isTame() && this.isOwnedBy(player)) {
             ItemStack stack = player.getItemInHand(hand);
             Item item = stack.getItem();

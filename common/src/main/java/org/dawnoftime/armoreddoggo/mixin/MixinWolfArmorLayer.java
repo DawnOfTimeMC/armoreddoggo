@@ -58,14 +58,12 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
                     VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(dogArmorItem.getTexture(crack)));
                     this.armoreddoggo$dogModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                     if (stack.is(ItemTags.DYEABLE)) {
-                        int colorARGB32 = DyedItemColor.getOrDefault(stack, 0);
+                        int colorARGB32 = DyedItemColor.getOrDefault(stack, -1);
                         ResourceLocation overlayTexture = dogArmorItem.getOverlayTexture(crack);
-                        if (FastColor.ARGB32.alpha(colorARGB32) != 0) {
-                            float red = (float)FastColor.ARGB32.red(colorARGB32) / 255.0F;
-                            float green = (float)FastColor.ARGB32.green(colorARGB32) / 255.0F;
-                            float blue = (float)FastColor.ARGB32.blue(colorARGB32) / 255.0F;
-                            this.armoreddoggo$dogModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
-                        }
+                        float red = (float)FastColor.ARGB32.red(colorARGB32) / 255.0F;
+                        float green = (float)FastColor.ARGB32.green(colorARGB32) / 255.0F;
+                        float blue = (float)FastColor.ARGB32.blue(colorARGB32) / 255.0F;
+                        this.armoreddoggo$dogModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
                     }
                     ci.cancel();
                 }

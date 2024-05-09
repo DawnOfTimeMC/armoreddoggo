@@ -5,7 +5,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Wolf;
-import org.dawnoftime.armoreddoggo.Constants;
 import org.jetbrains.annotations.NotNull;
 
 public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
@@ -17,16 +16,14 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 	protected final ModelPart scarfRightB;
 	protected final ModelPart scarfRightC;
 	protected final ModelPart scarfRightD;
-	private float lastAgeInTicks = 0;
-	private float animationProgress = 0;
 
 	public RaijinDogArmorModel(ModelPart root) {
 		super(root);
-		this.scarfLeftA = this.upperBody.getChild("mane_rotation").getChild("scarf_left_a");
+		this.scarfLeftA = root.getChild("upper_body").getChild("mane_rotation").getChild("scarf_left_a");
 		this.scarfLeftB = this.scarfLeftA.getChild("scarf_left_b");
 		this.scarfLeftC = this.scarfLeftB.getChild("scarf_left_c");
 		this.scarfLeftD = this.scarfLeftC.getChild("scarf_left_d");
-		this.scarfRightA = this.upperBody.getChild("mane_rotation").getChild("scarf_right_a");
+		this.scarfRightA = root.getChild("upper_body").getChild("mane_rotation").getChild("scarf_right_a");
 		this.scarfRightB = this.scarfRightA.getChild("scarf_right_b");
 		this.scarfRightC = this.scarfRightB.getChild("scarf_right_c");
 		this.scarfRightD = this.scarfRightC.getChild("scarf_right_d");
@@ -123,12 +120,12 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 	public void prepareMobModel(@NotNull T wolf, float limbSwing, float limbSwingAmount, float partialTicks) {
 		super.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
 		float ageInTicks = wolf.tickCount + partialTicks;
-		this.animationProgress = (this.animationProgress + (ageInTicks - this.lastAgeInTicks) / 60) % 1;
-		this.scarfLeftA.yRot = -1.1345F - 0.1F * Mth.sin(this.animationProgress * 2 * Mth.PI);
-		this.scarfRightA.yRot = 1.1345F + 0.1F * Mth.sin(this.animationProgress * 2 * Mth.PI);
-		this.scarfLeftA.zRot = -0.1F + 0.04F * Mth.sin(this.animationProgress * 2 * Mth.PI);
-		this.scarfRightA.zRot = 0.1F - 0.04F * Mth.sin(this.animationProgress * 2 * Mth.PI);
-		float prevAnim = (this.animationProgress + 0.25F) % 1;
+		float animationProgress = ((ageInTicks / 60) % 1);
+		this.scarfLeftA.yRot = -1.1345F - 0.1F * Mth.sin(animationProgress * 2 * Mth.PI);
+		this.scarfRightA.yRot = 1.1345F + 0.1F * Mth.sin(animationProgress * 2 * Mth.PI);
+		this.scarfLeftA.zRot = -0.1F + 0.04F * Mth.sin(animationProgress * 2 * Mth.PI);
+		this.scarfRightA.zRot = 0.1F - 0.04F * Mth.sin(animationProgress * 2 * Mth.PI);
+		float prevAnim = (animationProgress + 0.25F) % 1;
 		this.scarfLeftB.zRot = -0.3927F - 0.1F * Mth.sin(prevAnim * 2 * Mth.PI);
 		this.scarfRightB.zRot = 0.3927F + 0.1F * Mth.sin(prevAnim * 2 * Mth.PI);
 		prevAnim = (prevAnim + 0.25F) % 1;
@@ -137,6 +134,5 @@ public class RaijinDogArmorModel<T extends Wolf> extends DogArmorModel<T> {
 		prevAnim = (prevAnim + 0.25F) % 1;
 		this.scarfLeftD.zRot = 1.6786F - 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
 		this.scarfRightD.zRot = -1.6786F + 0.3F * Mth.sin(prevAnim * 2 * Mth.PI);
-		this.lastAgeInTicks = ageInTicks;
 	}
 }

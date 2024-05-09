@@ -15,34 +15,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.NoSuchElementException;
 
 public abstract class DogArmorModel<T extends Wolf> extends WolfModel<T> implements DogArmorModelSupplier {
-    protected final ModelPart head;
-    protected final ModelPart realHead;
-    protected final ModelPart body;
-    protected final ModelPart upperBody;
-    protected final ModelPart rightHindLeg;
-    protected final ModelPart leftHindLeg;
-    protected final ModelPart rightFrontLeg;
-    protected final ModelPart leftFrontLeg;
-    protected final ModelPart tail;
-    protected final ModelPart realTail;
 
     public DogArmorModel(ModelPart root) {
         super(root);
-        try {
-            this.head = root.getChild("head");
-            this.realHead = this.head.getChild("real_head");
-            this.body = root.getChild("body");
-            this.upperBody = root.getChild("upper_body");
-            this.rightHindLeg = root.getChild("right_hind_leg");
-            this.leftHindLeg = root.getChild("left_hind_leg");
-            this.rightFrontLeg = root.getChild("right_front_leg");
-            this.leftFrontLeg = root.getChild("left_front_leg");
-            this.tail = root.getChild("tail");
-            this.realTail = this.tail.getChild("real_tail");
-        } catch (NoSuchElementException e) {
-            Constants.LOG.error("Impossible to find one of the Vanilla Wolf ModelPart. Either wold model was modified, or you probably forgot to call DogArmorModel.templateLayerDefinition() to get the MeshDefinition of the model.");
-            throw new RuntimeException(e);
-        }
     }
 
     /**
