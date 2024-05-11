@@ -19,6 +19,7 @@ public class ItemModRegistry {
         registerItem(MOD_ID, ItemRegistry.TAB_ICON);
         registerItem(RAIJIN_DOG_ARMOR_NAME, ItemRegistry.RAIJIN_DOG_ARMOR);
         registerItem(HOLY_DOG_ARMOR_NAME, ItemRegistry.HOLY_DOG_ARMOR);
+        registerItem(QUETZAL_DOG_ARMOR_NAME, ItemRegistry.QUETZAL_DOG_ARMOR);
     }
 
     public static void registerItem(String name, Item item){

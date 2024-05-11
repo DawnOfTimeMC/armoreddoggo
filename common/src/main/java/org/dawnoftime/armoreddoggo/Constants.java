@@ -12,4 +12,5 @@ public class Constants {
 	// Armors
 	public static final String RAIJIN_DOG_ARMOR_NAME = "raijin_dog_armor";
 	public static final String HOLY_DOG_ARMOR_NAME = "holy_dog_armor";
+	public static final String QUETZAL_DOG_ARMOR_NAME = "quetzal_dog_armor";
 }

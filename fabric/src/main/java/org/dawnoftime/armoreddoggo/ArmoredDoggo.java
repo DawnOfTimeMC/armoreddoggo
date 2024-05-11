@@ -37,7 +37,10 @@ public class ArmoredDoggo implements ModInitializer {
         // Creative inventory init
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, new ResourceLocation(MOD_ID, MOD_ID), CREATIVE_MODE_TAB);
 
-        // Armor models init
+        // Loot tables
+        LootTableModifier.modifyLootTables();
+
+        // Client Side init
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             registerLayerDefinitions();
             registerColorHandlersEvent();

@@ -16,6 +16,7 @@ import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.dawnoftime.armoreddoggo.registry.ModelProviderRegistry;
 
 import static org.dawnoftime.armoreddoggo.ItemModRegistry.*;
+import static org.dawnoftime.armoreddoggo.LootTableModifier.GLOBAL_LOOT_MODIFIER;
 
 @Mod(Constants.MOD_ID)
 public class ArmoredDoggo {
@@ -33,7 +34,11 @@ public class ArmoredDoggo {
                 .displayItems((params, output) -> output.acceptAll(ITEMS.getEntries().stream().filter(holder -> holder != TAB_ICON).map((itemDeferredHolder) -> itemDeferredHolder.get().getDefaultInstance()).toList()))
                 .build());
 
-        // Armor models init
+
+        // Loot tables
+        GLOBAL_LOOT_MODIFIER.register(modEventBus);
+
+        // Client init
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ArmoredDoggo::registerLayerDefinitions);
             modEventBus.addListener(ArmoredDoggo::registerColorHandlersEvent);
