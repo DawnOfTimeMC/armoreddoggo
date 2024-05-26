@@ -18,7 +18,10 @@ import org.dawnoftime.armoreddoggo.Constants;
 import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Random;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.dawnoftime.armoreddoggo.ItemModRegistry.ITEMS;
 
@@ -37,9 +40,17 @@ public class LootTableModifier {
             this.probability = loot_probability;
         }
 
+
         @Override
         protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
-            ITEMS.getEntries().stream().map((DeferredHolder::get)).filter((item) -> item instanceof DogArmorItem).map(Item::getDefaultInstance).forEach(generatedLoot::add);
+            List<ItemStack> dogArmorItems = ITEMS.getEntries().stream()
+                    .map(DeferredHolder::get)
+                    .filter(item -> item instanceof DogArmorItem)
+                    .map(Item::getDefaultInstance)
+                    .toList();
+            if (!dogArmorItems.isEmpty()) {
+                generatedLoot.add(dogArmorItems.get(new Random().nextInt(dogArmorItems.size())));
+            }
             return generatedLoot;
         }
 
