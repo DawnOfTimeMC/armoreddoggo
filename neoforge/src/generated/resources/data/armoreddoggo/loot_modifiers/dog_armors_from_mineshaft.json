@@ -1,0 +1,10 @@
+{
+  "type": "armoreddoggo:armored_doggo_loot",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/abandoned_mineshaft"
+    }
+  ],
+  "loot_probability": 1.0
+}

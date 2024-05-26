@@ -1,4 +1,4 @@
-package org.dawnoftime.armoreddoggo;
+package org.dawnoftime.armoreddoggo.loot;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
@@ -14,6 +14,7 @@ import net.neoforged.neoforge.common.loot.LootModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.dawnoftime.armoreddoggo.Constants;
 import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,9 +24,9 @@ import static org.dawnoftime.armoreddoggo.ItemModRegistry.ITEMS;
 
 public class LootTableModifier {
     public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIER = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
-    private static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<AddItemsModifier>> MINESHAFT_LOOT = GLOBAL_LOOT_MODIFIER.register("armored_doggo_loot", AddItemsModifier.CODEC);
+    private static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<AddItemsModifier>> ARMORED_DOGGO_LOOT = GLOBAL_LOOT_MODIFIER.register("armored_doggo_loot", AddItemsModifier.CODEC);
 
-    private static class AddItemsModifier extends LootModifier {
+    protected static class AddItemsModifier extends LootModifier {
         public static final Supplier<MapCodec<LootTableModifier.AddItemsModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
                 .and(ExtraCodecs.POSITIVE_FLOAT.optionalFieldOf("loot_probability", 0.5F).forGetter(p -> p.probability))
                 .apply(inst, LootTableModifier.AddItemsModifier::new)));
@@ -44,7 +45,7 @@ public class LootTableModifier {
 
         @Override
         public @NotNull MapCodec<? extends IGlobalLootModifier> codec() {
-            return CODEC.get();
+            return ARMORED_DOGGO_LOOT.get();
         }
     }
 }
