@@ -23,7 +23,7 @@ public class ItemModRegistry {
     }
 
     public static void registerItem(String name, Item item){
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(MOD_ID, name), item);
+        Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, name), item);
         ITEMS.add(item);
     }
 }

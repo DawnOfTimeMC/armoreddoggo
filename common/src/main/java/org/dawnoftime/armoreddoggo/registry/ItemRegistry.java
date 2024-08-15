@@ -1,7 +1,9 @@
 package org.dawnoftime.armoreddoggo.registry;
 
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 
 import static org.dawnoftime.armoreddoggo.Constants.*;

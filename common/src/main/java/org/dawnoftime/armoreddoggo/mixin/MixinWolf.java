@@ -1,7 +1,12 @@
 package org.dawnoftime.armoreddoggo.mixin;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -15,10 +20,13 @@ import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.dawnoftime.armoreddoggo.Constants;
+import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,6 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Wolf.class)
 public abstract class MixinWolf extends TamableAnimal implements NeutralMob, VariantHolder<Holder<WolfVariant>> {
+    private static final @Unique TagKey<Enchantment> HAS_CURSE_OF_BINDING = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.withDefaultNamespace("has_curse_of_binding"));
     protected MixinWolf(EntityType<? extends TamableAnimal> type, Level level) {
         super(type, level);
     }
@@ -43,7 +52,7 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
             if(!this.getBodyArmorItem().isEmpty()){
                 // The doggo has an armor !
                 ItemStack armorStack = this.getBodyArmorItem();
-                if(stack.is(Items.SHEARS) && (!EnchantmentHelper.hasBindingCurse(armorStack) || player.isCreative())){
+                if(stack.is(Items.SHEARS) && (!(EnchantmentHelper.hasTag(armorStack, HAS_CURSE_OF_BINDING)) || player.isCreative())){
                     // We must drop it if the player has SHEARS in hand.
                     stack.hurtAndBreak(1, player, getSlotForHand(hand));
                     this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
@@ -68,5 +77,13 @@ public abstract class MixinWolf extends TamableAnimal implements NeutralMob, Var
                 }
             }
         }
+    }
+
+    /**
+     * In 1.21, mojang decided to make this method hardcoded to the armadillo armor - hence the cancellation.
+     */
+    @Inject(method = "hasArmor", at = @At("HEAD"), cancellable = true)
+    public void hasArmor(CallbackInfoReturnable<Boolean> cir) {
+        if(this.getBodyArmorItem().getItem() instanceof DogArmorItem) cir.setReturnValue(true);
     }
 }

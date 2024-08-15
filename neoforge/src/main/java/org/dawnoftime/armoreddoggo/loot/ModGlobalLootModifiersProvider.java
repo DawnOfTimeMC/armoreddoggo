@@ -17,7 +17,7 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         this.add("dog_armors_from_mineshaft",new LootTableModifier.AddItemsModifier(new LootItemCondition[]{
-            new LootTableIdCondition.Builder(new ResourceLocation("minecraft:chests/abandoned_mineshaft")).build()
+            new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("chests/abandoned_mineshaft")).build()
         }, 0.5F));
     }
 }

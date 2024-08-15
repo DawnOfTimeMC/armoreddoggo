@@ -39,7 +39,7 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
      * There are several models depending on the armor equipped in this mod. I will create my own model fields (colored and uncolored), and render them if one of this mod's item is equipped.
      * I will have to cancel {@link WolfArmorLayer}#model rendering in this case.<br>
      */
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/Wolf;FFFFFF)V", at = @At("HEAD"), cancellable = true)
     private void onRender(PoseStack poseStack, MultiBufferSource buffer, int light, Wolf pLivingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         if(pLivingEntity instanceof Wolf wolf){
             if (wolf.hasArmor()) {
@@ -56,14 +56,11 @@ public abstract class MixinWolfArmorLayer extends RenderLayer<Wolf, WolfModel<Wo
                     this.armoreddoggo$dogModel.prepareMobModel(wolf, limbSwing, limbSwingAmount, partialTicks);
                     this.armoreddoggo$dogModel.setupAnim(wolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(dogArmorItem.getTexture(crack)));
-                    this.armoreddoggo$dogModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                    this.armoreddoggo$dogModel.renderToBuffer(poseStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY);
                     if (stack.is(ItemTags.DYEABLE)) {
-                        int colorARGB32 = DyedItemColor.getOrDefault(stack, -1);
+                        int color = DyedItemColor.getOrDefault(stack, -1);
                         ResourceLocation overlayTexture = dogArmorItem.getOverlayTexture(crack);
-                        float red = (float)FastColor.ARGB32.red(colorARGB32) / 255.0F;
-                        float green = (float)FastColor.ARGB32.green(colorARGB32) / 255.0F;
-                        float blue = (float)FastColor.ARGB32.blue(colorARGB32) / 255.0F;
-                        this.armoreddoggo$dogModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+                        this.armoreddoggo$dogModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucent(overlayTexture)), light, OverlayTexture.NO_OVERLAY, color);
                     }
                     ci.cancel();
                 }

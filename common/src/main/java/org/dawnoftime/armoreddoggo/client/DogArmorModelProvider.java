@@ -25,17 +25,17 @@ public class DogArmorModelProvider {
     public DogArmorModelProvider(String armorName, Supplier<LayerDefinition> layerDefinitionSupplier, DogArmorModelSupplier modelSupplier){
         this.layerDefinitionSupplier = layerDefinitionSupplier;
         this.dogArmorModelSupplier = modelSupplier;
-        this.modelLayerLocation = new ModelLayerLocation(new ResourceLocation("minecraft:wolf"), armorName);
+        this.modelLayerLocation = new ModelLayerLocation(ResourceLocation.parse("minecraft:wolf"), armorName);
         this.textureResourceLocations = Map.of(
-                Crackiness.Level.NONE, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + ".png"),
-                Crackiness.Level.LOW, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_low.png"),
-                Crackiness.Level.MEDIUM, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_medium.png"),
-                Crackiness.Level.HIGH, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_high.png"));
+                Crackiness.Level.NONE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + ".png"),
+                Crackiness.Level.LOW, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_low.png"),
+                Crackiness.Level.MEDIUM, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_medium.png"),
+                Crackiness.Level.HIGH, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_high.png"));
         this.overlayResourceLocations = Map.of(
-                Crackiness.Level.NONE, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_overlay.png"),
-                Crackiness.Level.LOW, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_low_overlay.png"),
-                Crackiness.Level.MEDIUM, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_medium_overlay.png"),
-                Crackiness.Level.HIGH, new ResourceLocation(MOD_ID, "textures/models/armor/" + armorName + "_high_overlay.png"));
+                Crackiness.Level.NONE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_overlay.png"),
+                Crackiness.Level.LOW, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_low_overlay.png"),
+                Crackiness.Level.MEDIUM, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_medium_overlay.png"),
+                Crackiness.Level.HIGH, ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/models/armor/" + armorName + "_high_overlay.png"));
     }
 
     @NotNull

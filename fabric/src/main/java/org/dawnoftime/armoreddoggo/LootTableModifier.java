@@ -12,7 +12,7 @@ import org.dawnoftime.armoreddoggo.item.DogArmorItem;
 
 public class LootTableModifier {
 
-    private static final ResourceLocation REWARD_COMMON = new ResourceLocation("minecraft", "chests/abandoned_mineshaft");
+    private static final ResourceLocation REWARD_COMMON = ResourceLocation.withDefaultNamespace("chests/abandoned_mineshaft");
 
     public static void modifyLootTables(){
         LootTableEvents.MODIFY.register((key, tableBuilder, source) -> {

@@ -1,5 +1,8 @@
 package org.dawnoftime.armoreddoggo.platform.services;
 
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.enchantment.Enchantment;
+
 public interface IPlatformHelper {
 
     /**

@@ -35,7 +35,7 @@ public class ArmoredDoggo implements ModInitializer {
         ItemModRegistry.init();
 
         // Creative inventory init
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, new ResourceLocation(MOD_ID, MOD_ID), CREATIVE_MODE_TAB);
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ResourceLocation.fromNamespaceAndPath(MOD_ID, MOD_ID), CREATIVE_MODE_TAB);
 
         // Loot tables
         LootTableModifier.modifyLootTables();
